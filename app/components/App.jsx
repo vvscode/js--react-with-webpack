@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
+import AltContainer from 'alt/AltContainer';
 import Notes from './Notes.jsx';
 import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
-import connect from '../decorators/connect';
 
-@connect(NoteStore)
 export default class App extends Component {
   render() {
     const notes = this.props.notes;
@@ -12,11 +11,16 @@ export default class App extends Component {
     return (
       <div>
         <button className="add-note" onClick={this.addNote}>+</button>
-        <Notes
-          items={notes}
-          onEdit={this.editNote}
-          onDelete={this.deleteNote}
-        />
+        <AltContainer
+          stores={[NoteStore]}
+          inject={
+            {
+              items: () => NoteStore.getState().notes
+            }
+          }
+        >
+          <Notes onEdit={this.editNote} onDelete={this.deleteNote}/>
+        </AltContainer>
       </div>
     );
   }
