@@ -5,6 +5,7 @@ import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
 import LaneActions from '../actions/LaneActions';
 import Editable from './Editable.jsx';
+import '../styles/lane.css';
 
 export default class App extends React.Component {
   constructor(props) {
