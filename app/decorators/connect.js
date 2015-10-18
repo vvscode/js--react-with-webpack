@@ -20,7 +20,8 @@ const connect = (Component, store) => {
     }
 
     render() {
-      return <Component {...this.props} {...this.state} />;    }
+      return (<Component {...this.props} {...this.state} />);
+    }
   };
 };
 

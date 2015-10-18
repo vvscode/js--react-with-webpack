@@ -2,6 +2,7 @@ import uuid from 'node-uuid';
 import alt from '../libs/alt';
 import LaneActions from '../actions/LaneActions';
 import NoteStore from './NoteStore';
+import update from 'react/lib/update';
 
 class LaneStore {
   constructor() {
@@ -95,6 +96,32 @@ class LaneStore {
       console.warn('Failed to find lane', lanes, id);
     }
     return laneIndex;
+  }
+
+  move({sourceId, targetId}) {
+    const lanes = this.lanes;
+    const sourceLane = lanes.filter((lane) => {
+      return lane.notes.indexOf(sourceId) >= 0;
+    })[0];
+    const targetLane = lanes.filter((lane) => {
+      return lane.notes.indexOf(targetId) >= 0;
+    })[0];
+    const sourceNoteIndex = sourceLane.notes.indexOf(sourceId);
+    const targetNoteIndex = targetLane.notes.indexOf(targetId);
+
+    if(sourceLane === targetLane) {
+      sourceLane.notes = update (sourceLane.notes, {
+        $splice: [
+          [sourceNoteIndex, 1],
+          [targetNoteIndex, 0, sourceId]
+        ]
+      })
+    } else {
+      sourceLane.notes.splice(sourceNoteIndex, 1);
+      targetLane.notes.splice(targetNoteIndex, 0, sourceId);
+    }
+
+    this.setState({lanes});
   }
 }
 
