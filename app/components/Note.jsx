@@ -43,28 +43,4 @@ export default class Note extends Component {
       {onDelete ? this.renderDelete(): null}
       </div>);
   }
-
-  renderDelete() {
-    return <button className="delete" onClick={this.props.onDelete}>X</button>;
-  }
-
-  edit() {
-    this.setState({
-      editing: true
-    });
-  }
-
-  checkEnter(e) {
-    if(e.key === 'Enter') {
-      this.finishEdit(e);
-    }
-  }
-
-  finishEdit(e) {
-    this.props.onEdit(e.target.value);
-
-    this.setState({
-      editing: false
-    });
-  }
 }
