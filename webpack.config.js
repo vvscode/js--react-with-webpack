@@ -53,4 +53,8 @@ if(TARGET === 'start' || !TARGET) {
       new webpack.HotModuleReplacementPlugin()
     ]
   });
+} else if(TARGET === 'build') {
+  module.exports = merge(common, {
+    devtool: 'source-map'
+  });
 }
